@@ -146,3 +146,33 @@ export async function updateCategory(categoryId: string, data: any) {
 
     return await res.json()
 }
+
+export async function getUsers() {
+    const cookieStore = await cookies()
+    const res = await fetch(`http://localhost:5000/api/admin/users`, {
+        headers: { Cookie: cookieStore.toString() }
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch users");
+    }
+
+    const data = await res.json();
+    return data.data;
+}
+export async function updateUserStatus(userId: string, data: { status: 'ACTIVE' | 'BANNED' }) {
+    console.log(data)
+    const cookieStore = await cookies()
+    const res = await fetch(`http://localhost:5000/api/admin/users/` + userId, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', Cookie: cookieStore.toString() },
+        body: JSON.stringify(data)
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch users");
+    }
+
+
+    return await res.json();
+}
