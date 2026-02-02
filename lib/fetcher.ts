@@ -131,3 +131,18 @@ export async function addCategory(data: any) {
 
     return await res.json()
 }
+export async function updateCategory(categoryId: string, data: any) {
+    const cookieStore = await cookies()
+    const res = await fetch(`http://localhost:5000/api/categories/` + categoryId, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Cookie: cookieStore.toString()
+        },
+        body: JSON.stringify(data)
+    })
+    console.log({ res })
+    if (!res.ok) throw new Error("Failed to update category")
+
+    return await res.json()
+}

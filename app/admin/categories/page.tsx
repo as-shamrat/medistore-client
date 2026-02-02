@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { addCategory, getCategories } from "@/lib/fetcher";
+import { addCategory, getCategories, updateCategory } from "@/lib/fetcher";
 
 interface Category {
     id: string;
@@ -43,9 +43,7 @@ export default function AdminCategoriesPage() {
     const handleUpdateCategory = async (id: string) => {
         if (!editingName.trim()) return;
 
-        // await axios.patch(`/api/admin/categories/${id}`, {
-        //     name: editingName,
-        // });
+        await updateCategory(id, { name: editingName })
 
         setEditingId(null);
         setEditingName("");
