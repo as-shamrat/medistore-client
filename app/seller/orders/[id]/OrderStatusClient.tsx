@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { updateSellerOrder } from "@/lib/fetcher"
 
 const STATUS_FLOW: Record<string, string[]> = {
     PENDING: ["CONFIRMED", "CANCELLED"],
@@ -25,15 +26,7 @@ export default function OrderStatusClient({
     async function updateStatus() {
         setLoading(true)
 
-        await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/seller/orders/${orderId}`,
-            {
-                method: "PATCH",
-                credentials: "include",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ status }),
-            }
-        )
+        await updateSellerOrder(orderId, { status })
 
         setLoading(false)
         router.refresh()

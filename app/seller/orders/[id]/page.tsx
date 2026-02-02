@@ -10,13 +10,12 @@ export default async function SellerOrderDetailsPage({
 }: PageProps) {
     const { id } = await params
     console.log(id)
-    const { data } = await getSellerOrderById(id)
-    console.log({ data })
-    const { order } = data;
+    const { data: order } = await getSellerOrderById(id)
+    console.log(order)
     return (
         <div className="p-6 max-w-3xl mx-auto">
             <h1 className="text-2xl font-semibold mb-4">
-                Order #{data.order.id.slice(0, 8)}
+                Order #{order.id.slice(0, 8)}
             </h1>
 
             <div className="bg-white border rounded-lg p-4 mb-6">
