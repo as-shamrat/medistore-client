@@ -3,7 +3,7 @@ import { getSellerMedicines } from "@/lib/fetcher"
 import MedicinesTables from "./MedicinesTables"
 
 export default async function SellerMedicinesPage() {
-    // fetch from backend (server-side)
+
     const data = await getSellerMedicines();
 
 

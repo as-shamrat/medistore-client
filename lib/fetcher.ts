@@ -70,3 +70,16 @@ export async function updateSellerMedicine(medicineId: string, data: any) {
     return await res.json()
 }
 
+
+export async function getAdminOrders() {
+    const cookieStore = await cookies()
+    const res = await fetch(`http://localhost:5000/api/admin/orders`, {
+        headers: {
+            Cookie: cookieStore.toString()
+        }
+    })
+    console.log({ res })
+    if (!res.ok) throw new Error("Failed to fetch orders")
+
+    return await res.json()
+}
