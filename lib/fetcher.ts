@@ -83,3 +83,18 @@ export async function getAdminOrders() {
 
     return await res.json()
 }
+export async function updateAdminOrder(orderId: string, data: any) {
+    const cookieStore = await cookies()
+    const res = await fetch(`http://localhost:5000/api/admin/orders/` + orderId, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Cookie: cookieStore.toString()
+        },
+        body: JSON.stringify(data)
+    })
+    console.log({ res })
+    if (!res.ok) throw new Error("Failed to update admin orders")
+
+    return await res.json()
+}

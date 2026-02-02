@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"; // Shadcn UI Select
-import { getAdminOrders } from "@/lib/fetcher";
+import { getAdminOrders, updateAdminOrder } from "@/lib/fetcher";
 
 interface Order {
     id: string;
@@ -39,14 +39,14 @@ export default function AdminOrdersPage() {
     };
 
     const handleStatusChange = async (orderId: string, newStatus: string) => {
-        // try {
-        //     await axios.patch(`/api/admin/orders/${orderId}`, { status: newStatus });
-        //     setOrders((prev) =>
-        //         prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
-        //     );
-        // } catch (error) {
-        //     console.error("Failed to update status", error);
-        // }
+        try {
+            await updateAdminOrder(orderId, { status: newStatus });
+            setOrders((prev) =>
+                prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
+            );
+        } catch (error) {
+            console.error("Failed to update status", error);
+        }
     };
 
     useEffect(() => {
