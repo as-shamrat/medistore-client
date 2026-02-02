@@ -2,6 +2,8 @@
 
 import { cookies } from "next/headers";
 
+// seller
+
 export async function getSellerOrders() {
     const cookieStore = await cookies()
     const res = await fetch(`http://localhost:5000/api/seller/orders`, {
@@ -70,6 +72,7 @@ export async function updateSellerMedicine(medicineId: string, data: any) {
     return await res.json()
 }
 
+// admin
 
 export async function getAdminOrders() {
     const cookieStore = await cookies()
@@ -95,6 +98,36 @@ export async function updateAdminOrder(orderId: string, data: any) {
     })
     console.log({ res })
     if (!res.ok) throw new Error("Failed to update admin orders")
+
+    return await res.json()
+}
+
+// categories
+export async function getCategories() {
+    const cookieStore = await cookies()
+    const res = await fetch(`http://localhost:5000/api/categories`, {
+        headers: {
+            Cookie: cookieStore.toString()
+        }
+    })
+    console.log({ res })
+    if (!res.ok) throw new Error("Failed to fetch categories")
+
+    return await res.json()
+}
+
+export async function addCategory(data: any) {
+    const cookieStore = await cookies()
+    const res = await fetch(`http://localhost:5000/api/categories`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Cookie: cookieStore.toString()
+        },
+        body: JSON.stringify(data)
+    })
+    console.log({ res })
+    if (!res.ok) throw new Error("Failed to create category")
 
     return await res.json()
 }

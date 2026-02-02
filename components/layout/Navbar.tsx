@@ -54,6 +54,71 @@ export default function Navbar() {
                     >
                         Shop
                     </Link>
+                    {
+                        session?.user.role === 'CUSTOMER' && <>
+                            <Link
+                                href="/cart"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Cart
+                            </Link>
+                            <Link
+                                href="/orders"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Orders
+                            </Link>
+                            <Link
+                                href="/profile"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Profile
+                            </Link>
+                        </>
+                    }
+                    {
+                        session?.user.role === 'SELLER' && <>
+                            <Link
+                                href="/seller/dashboard"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Dashboard
+                            </Link>
+                            <Link
+                                href="/seller/medicines"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Medicines
+                            </Link>
+                            <Link
+                                href="/seller/orders"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Orders
+                            </Link>
+                        </>
+                    }
+                    {
+                        session?.user.role === 'ADMIN' && <>
+                            <Link
+                                href="/admin/orders"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Orders
+                            </Link>
+                            <Link
+                                href="/admin/users"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Users
+                            </Link>
+                            <Link
+                                href="/admin/categories"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Categories
+                            </Link></>
+                    }
 
                     {
                         session?.user ? <>
@@ -76,7 +141,7 @@ export default function Navbar() {
                     }
 
                 </nav>
-            </div>
-        </header>
+            </div >
+        </header >
     )
 }
