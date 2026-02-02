@@ -176,3 +176,26 @@ export async function updateUserStatus(userId: string, data: { status: 'ACTIVE' 
 
     return await res.json();
 }
+export async function addMedicine(data: {
+    name: string,
+    description: string,
+    price: number,
+    stock: number,
+    manufacturer: string,
+    categoryId: string
+}) {
+    console.log(data)
+    const cookieStore = await cookies()
+    const res = await fetch(`http://localhost:5000/api/seller/medicines`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Cookie: cookieStore.toString() },
+        body: JSON.stringify(data)
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to add medicine");
+    }
+
+
+    return await res.json();
+}
