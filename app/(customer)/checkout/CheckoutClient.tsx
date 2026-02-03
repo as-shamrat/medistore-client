@@ -28,7 +28,7 @@ export default function CheckoutClient() {
 
         try {
             const res = await fetch(
-                `http://localhost:5000/api/orders`,
+                `https://medi-store-phi.vercel.app/api/orders`,
                 {
                     method: "POST",
                     credentials: "include",

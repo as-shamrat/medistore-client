@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 
 export async function getSellerOrders() {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/seller/orders`, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/seller/orders`, {
         headers: {
             Cookie: cookieStore.toString()
         }
@@ -18,7 +18,7 @@ export async function getSellerOrders() {
 }
 export async function getSellerMedicines() {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/seller/medicines`, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/seller/medicines`, {
         headers: {
             Cookie: cookieStore.toString()
         }
@@ -30,7 +30,7 @@ export async function getSellerMedicines() {
 }
 export async function getSellerOrderById(id: string) {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/seller/orders/` + id, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/seller/orders/` + id, {
         headers: {
             Cookie: cookieStore.toString()
         }
@@ -43,7 +43,7 @@ export async function getSellerOrderById(id: string) {
 
 export async function updateSellerOrder(orderId: string, data: any) {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/seller/orders/` + orderId, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/seller/orders/` + orderId, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export async function updateSellerOrder(orderId: string, data: any) {
 }
 export async function updateSellerMedicine(medicineId: string, data: any) {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/seller/medicines/` + medicineId, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/seller/medicines/` + medicineId, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -76,7 +76,8 @@ export async function updateSellerMedicine(medicineId: string, data: any) {
 
 export async function getAdminOrders() {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/admin/orders`, {
+    console.log('From admin orders: ', cookieStore.toString())
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/admin/orders`, {
         headers: {
             Cookie: cookieStore.toString()
         }
@@ -88,7 +89,7 @@ export async function getAdminOrders() {
 }
 export async function updateAdminOrder(orderId: string, data: any) {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/admin/orders/` + orderId, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/admin/orders/` + orderId, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -105,7 +106,7 @@ export async function updateAdminOrder(orderId: string, data: any) {
 // categories
 export async function getCategories() {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/categories`, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/categories`, {
         headers: {
             Cookie: cookieStore.toString()
         }
@@ -118,7 +119,7 @@ export async function getCategories() {
 
 export async function addCategory(data: any) {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/categories`, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/categories`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -133,7 +134,7 @@ export async function addCategory(data: any) {
 }
 export async function updateCategory(categoryId: string, data: any) {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/categories/` + categoryId, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/categories/` + categoryId, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -149,7 +150,7 @@ export async function updateCategory(categoryId: string, data: any) {
 
 export async function getUsers() {
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/admin/users`, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/admin/users`, {
         headers: { Cookie: cookieStore.toString() }
     });
 
@@ -163,7 +164,7 @@ export async function getUsers() {
 export async function updateUserStatus(userId: string, data: { status: 'ACTIVE' | 'BANNED' }) {
     console.log(data)
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/admin/users/` + userId, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/admin/users/` + userId, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', Cookie: cookieStore.toString() },
         body: JSON.stringify(data)
@@ -186,7 +187,7 @@ export async function addMedicine(data: {
 }) {
     console.log(data)
     const cookieStore = await cookies()
-    const res = await fetch(`http://localhost:5000/api/seller/medicines`, {
+    const res = await fetch(`https://medi-store-phi.vercel.app/api/seller/medicines`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Cookie: cookieStore.toString() },
         body: JSON.stringify(data)

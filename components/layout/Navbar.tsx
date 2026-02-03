@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+
 type Session =
     Awaited<ReturnType<typeof authClient.getSession>>["data"];
 
@@ -19,7 +20,7 @@ export default function Navbar() {
         let active = true;
 
         authClient.getSession().then(({ data }) => {
-            console.log(data)
+            console.log({ data })
             if (active) {
                 setSession(data);
 
@@ -89,6 +90,12 @@ export default function Navbar() {
                                 className="text-gray-700 hover:text-blue-600 transition"
                             >
                                 Medicines
+                            </Link>
+                            <Link
+                                href="/seller/medicines/add"
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
+                                Add Medicines
                             </Link>
                             <Link
                                 href="/seller/orders"

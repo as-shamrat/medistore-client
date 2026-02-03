@@ -29,7 +29,7 @@ export default function ShopPage() {
                 const query = new URLSearchParams();
                 if (search) query.append("search", search);
 
-                const res = await fetch(`http://localhost:5000/api/medicines?${query.toString()}`);
+                const res = await fetch(`https://medi-store-phi.vercel.app/api/medicines?${query.toString()}`);
                 const data = await res.json();
                 setMedicines(data.data || []);
             } catch (err) {

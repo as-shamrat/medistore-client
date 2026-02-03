@@ -25,7 +25,7 @@ export default function MedicineDetailsPage() {
     useEffect(() => {
         async function fetchMedicine() {
             try {
-                const res = await fetch(`http://localhost:5000/api/medicines/${medicineId}`);
+                const res = await fetch(`https://medi-store-phi.vercel.app/api/medicines/${medicineId}`);
                 const data = await res.json();
                 setMedicine(data.data);
             } catch (err) {
