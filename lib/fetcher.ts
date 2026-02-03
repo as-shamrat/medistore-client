@@ -147,7 +147,7 @@ export async function updateCategory(categoryId: string, data: any) {
 
     return await res.json()
 }
-
+// users by admin
 export async function getUsers() {
     const cookieStore = await cookies()
     const res = await fetch(`https://medi-store-phi.vercel.app/api/admin/users`, {
