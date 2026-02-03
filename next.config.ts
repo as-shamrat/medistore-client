@@ -5,14 +5,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/auth/:path*",
-        destination: `https://medi-store-phi.vercel.app/api/auth/:path*`,
-      },
-    ];
-  },
+
 }
 
 
