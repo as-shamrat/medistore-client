@@ -14,7 +14,7 @@ export default function RegisterPage() {
         console.log({ name, email, password })
         // API call later
         const response = await authClient.signUp.email({
-            name, email, password, callbackURL: 'http://localhost:3000/login'
+            name, email, password, callbackURL: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/login`
         })
         console.log('Register Response: ', response)
     }

@@ -13,7 +13,7 @@ export default function LoginPage() {
         console.log({ email, password })
         // API call later
         const response = await authClient.signIn.email({
-            email, password, callbackURL: 'http://localhost:3000'
+            email, password, callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL
         })
         console.log('Login Response: ', response)
     }
