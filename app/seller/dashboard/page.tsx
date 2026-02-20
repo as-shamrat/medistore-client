@@ -13,7 +13,7 @@ export default async function SellerDashboardPage() {
     }
 
     const res = await fetch(
-        `https://medi-store-phi.vercel.app/seller/orders`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/seller/orders`,
         {
             headers: {
                 Cookie: cookieStore.toString(),

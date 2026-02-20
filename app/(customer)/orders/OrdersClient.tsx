@@ -19,7 +19,7 @@ export default function OrdersClient() {
         async function fetchOrders() {
             try {
                 const res = await fetch(
-                    `https://medi-store-phi.vercel.app/orders`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/orders`,
                     { credentials: "include" }
                 )
                 const data = await res.json()

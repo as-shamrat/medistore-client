@@ -13,7 +13,7 @@ export default function LoginPage() {
         console.log({ email, password })
         // API call later
         const response = await authClient.signIn.email({
-            email, password, callbackURL: 'https://medistore-client-chi.vercel.app'
+            email, password, callbackURL: 'http://localhost:3000'
         })
         console.log('Login Response: ', response)
     }

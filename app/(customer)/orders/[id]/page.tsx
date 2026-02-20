@@ -10,7 +10,7 @@ type PageProps = {
 async function getOrder(id: string) {
     const token = await cookies()
 
-    const res = await fetch(`https://medi-store-phi.vercel.app/orders/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}`, {
         headers: {
             Cookie: token.toString()
         },

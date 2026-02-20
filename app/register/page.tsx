@@ -14,7 +14,7 @@ export default function RegisterPage() {
         console.log({ name, email, password })
         // API call later
         const response = await authClient.signUp.email({
-            name, email, password, callbackURL: 'https://medistore-client-chi.vercel.app/login'
+            name, email, password, callbackURL: 'http://localhost:3000/login'
         })
         console.log('Register Response: ', response)
     }

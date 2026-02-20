@@ -9,7 +9,7 @@ export default async function ProfilePage() {
         redirect('/login')
     }
 
-    const res = await fetch(`https://medi-store-phi.vercel.app/api/auth/me`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`, {
         headers: {
             Cookie: cookieStore.toString()
         },
