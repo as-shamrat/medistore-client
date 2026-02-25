@@ -1,5 +1,6 @@
 "use client"
 
+import { useAuth } from "@/context/AuthContext"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
@@ -12,16 +13,25 @@ interface Order {
 }
 
 export default function OrdersClient() {
+    const ctx = useAuth();
+    console.log({ user: ctx.user })
     const [orders, setOrders] = useState<Order[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchOrders() {
             try {
+
                 const res = await fetch(
                     `${process.env.NEXT_PUBLIC_API_URL}/api/orders`,
-                    { credentials: "include" }
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${ctx.user?.token}`,
+                        },
+                    }
                 )
+                if (!res.ok) throw new Error("Failed to fetch orders")
                 const data = await res.json()
                 setOrders(data.data || [])
             } catch (err) {

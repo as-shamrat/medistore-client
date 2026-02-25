@@ -7,37 +7,58 @@ import { redirect } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import { getUser } from "@/helper/localStorage";
+import { useAuth } from "@/context/AuthContext";
 
-type Session =
-    Awaited<ReturnType<typeof authClient.getSession>>["data"];
+
 
 export default function Navbar() {
-    const [session, setSession] = useState<Session>(null);
-    const [toBeFetched, setToBeFetched] = useState(true)
+    // const [session, setSession] = useState<Session>(null);
+    const ctx = useAuth();
+    const { user } = ctx
+    console.log('Auth context in Navbar: ', ctx)
+    // const [toBeFetched, setToBeFetched] = useState(true)
 
-    console.log(session)
-    useEffect(() => {
-        let active = true;
 
-        authClient.getSession().then(({ data }) => {
-            console.log({ data })
-            if (active) {
-                setSession(data);
+    // useEffect(() => {
+    //     let active = true;
 
-            }
-        });
+    //     // authClient.getSession().then(({ data }) => {
+    //     //     console.log({ data })
+    //     //     if (active) {
+    //     //         setSession(data);
 
-        return () => {
-            active = false;
-        };
-    }, [toBeFetched]);
+    //     //     }
+    //     // });
+    //     const user = getUser();
+    //     setUser(user)
+
+    //     return () => {
+    //         active = false;
+    //     };
+    // }, [toBeFetched]);
 
     async function handleLogout() {
         console.log('logging out')
-        await authClient.signOut()
-        setToBeFetched(toBeFetched => !toBeFetched)
-        redirect('/login')
+        // await authClient.signOut()
+        // setToBeFetched(toBeFetched => !toBeFetched)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${user?.token}`,
+            },
+        });
+        const data = await response.json();
+        console.log('Logout Response: ', data)
+        if (data.success) {
+            console.log('Logout successful')
+            ctx.removeUserFromContext()
+            // authClient.clearToken()
+            redirect('/login')
+        }
+
     }
+    console.log('Current user in Navbar: ', user)
     return (
         <header className="border-b bg-white">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -56,7 +77,7 @@ export default function Navbar() {
                         Shop
                     </Link>
                     {
-                        session?.user.role === 'CUSTOMER' && <>
+                        user?.role === 'CUSTOMER' && <>
                             <Link
                                 href="/cart"
                                 className="text-gray-700 hover:text-blue-600 transition"
@@ -78,7 +99,7 @@ export default function Navbar() {
                         </>
                     }
                     {
-                        session?.user.role === 'SELLER' && <>
+                        user?.role === 'SELLER' && <>
                             <Link
                                 href="/seller/dashboard"
                                 className="text-gray-700 hover:text-blue-600 transition"
@@ -106,7 +127,7 @@ export default function Navbar() {
                         </>
                     }
                     {
-                        session?.user.role === 'ADMIN' && <>
+                        user?.role === 'ADMIN' && <>
                             <Link
                                 href="/admin/orders"
                                 className="text-gray-700 hover:text-blue-600 transition"
@@ -128,8 +149,8 @@ export default function Navbar() {
                     }
 
                     {
-                        session?.user ? <>
-                            <span>Hello, {session.user.name}</span>
+                        user ? <>
+                            <span>Hello, {user.name}</span>
                             <Button onClick={handleLogout}
                                 className="px-3 py-1 bg-red-500 text-black rounded" variant="outline">Logout</Button>
                         </> : <><Link

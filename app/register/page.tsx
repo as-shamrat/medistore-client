@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { authClient } from "@/lib/auth-client"
+import { redirect } from "next/navigation"
 
 export default function RegisterPage() {
     const [name, setName] = useState("")
@@ -11,12 +11,23 @@ export default function RegisterPage() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        console.log({ name, email, password })
+        console.log({ email, password })
         // API call later
-        const response = await authClient.signUp.email({
-            name, email, password, callbackURL: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/login`
-        })
-        console.log('Register Response: ', response)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, email, password }),
+        });
+        const data = await response.json();
+        console.log('Register Response: ', data)
+        if (data.success) {
+            // authClient.setToken(data.token)
+
+            redirect("/login")
+        }
+
     }
 
 

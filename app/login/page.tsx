@@ -2,9 +2,14 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { authClient } from "@/lib/auth-client"
+import { setToken, setUser } from "@/helper/localStorage"
+import { redirect } from "next/navigation"
+import { useAuth } from "@/context/AuthContext"
+// import { console } from "inspector/promises"
+// import { authClient } from "@/lib/auth-client"
 
 export default function LoginPage() {
+    const ctx = useAuth();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -12,22 +17,27 @@ export default function LoginPage() {
         e.preventDefault()
         console.log({ email, password })
         // API call later
-        const response = await authClient.signIn.email({
-            email, password, callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL
-        })
-        console.log('Login Response: ', response)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+        });
+        const data = await response.json();
+        console.log('Login Response: ', data)
+        if (data.success) {
+            // authClient.setToken(data.token)
+            console.log('Login successful, token: ', data.data.token)
+            // setToken(data.data.token)
+            // setUser(data.data.user)
+            ctx.saveUserToContext({ ...data.data.user, token: data.data.token })
+            redirect("/")
+        }
+
     }
-    //     const handleLogin = async (e) => {
-    //     e.preventDefault();
-    //     const formData = new FormData(e.target)
-    //     const data = Object.fromEntries(formData)
-    //     console.log(data)
-    //     const response = await authClient.signIn.email({
-    //       email: formData.get('email') as string, password: formData.get('password') as string, rememberMe: true,
-    //       callbackURL: "http://localhost:3000"
-    //     })
-    //     console.log(response)
-    //   }
+
 
     return (
         <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
